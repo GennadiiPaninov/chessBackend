@@ -28,3 +28,7 @@ model OpponentMove {
   move     Move   @relation(fields: [moveId], references: [id])
   name     String
 }
+
+model Commands {
+  id       String @id @default(uuid())
+}
