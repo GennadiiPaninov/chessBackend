@@ -1,0 +1,30 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       String  @id @default(uuid())
+  email    String  @unique
+  password String
+  moves    Move[]
+}
+
+model Move {
+  id          String         @id @default(uuid())
+  name        String
+  userId      String
+  user        User           @relation(fields: [userId], references: [id])
+  opponentMoves OpponentMove[]
+}
+
+model OpponentMove {
+  id       String @id @default(uuid())
+  moveId   String
+  move     Move   @relation(fields: [moveId], references: [id])
+  name     String
+}
